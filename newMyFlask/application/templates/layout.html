@@ -1,0 +1,23 @@
+
+<html>
+<head>
+	<title>{{title}}</title>
+ </head>
+ <body>
+	 <h1>{{title}}</h1>
+         <a href="{{url_for('home')}}">Home Page</a>
+	 <a href="{{url_for('library')}}">Library</a>	 
+	 <a href="{{url_for('register')}}">Registration Page</a>
+	{% if current_user.is_authenticated %}
+		<a href="{{url_for('shelf')}}">My Shelf</a>
+		<a href="{{url_for('logout')}}">Logout</a>
+	{%endif%}
+
+
+	<b>
+{% block body_content%}
+{% endblock %}
+<br>
+ </body>
+</html>
+
