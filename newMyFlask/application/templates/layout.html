@@ -12,9 +12,15 @@
 		<a href="{{url_for('shelf')}}">My Shelf</a>
 		<a href="{{url_for('logout')}}">Logout</a>
 	{%endif%}
-
-
 	<b>
+	<form method = "POST" action="/search_results">
+	{{sform.hidden_tag()}}
+	{{sform.search.label}}
+	{{sform.search}}
+	{{sform.submit}}
+	</form>
+
+
 {% block body_content%}
 {% endblock %}
 <br>

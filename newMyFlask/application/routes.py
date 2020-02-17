@@ -1,35 +1,20 @@
 
-from flask import render_template, redirect, url_for, request
+from flask import render_template, redirect, url_for, request, flash
 from application import app, db, bcrypt
 from application.models import Users
-from application.forms import RegistrationForm, LoginForm
+from application.forms import RegistrationForm, LoginForm, SearchForm
 from flask_login import login_user, current_user, logout_user, login_required
 from application.models import Books
 import pandas as pd
-
-
+from sqlalchemy  import func, select 
 
 
 
 @app.route('/')
-
-@app.route('/home')
-def home():
-   # data = pd.read_excel('./application/bslice1.xlsx')
+@app.route('/home', methods=['GET', 'POST'])
+def home():   
+    return render_template('home.html', title='Home Page', sform=SearchForm())
    
-   # data.columns=['author','desc', 'pages','title','genre', 'image']
-   # for index, row  in data.iterrows():
-    #    book = Books(author=row[0],book_desc= row[1], book_pages=row[2], book_title=row[3], book_genre=row[4],book_image=row[5])
-     #   db.session.add(book)
-
-   # db.session.commit()
-    return render_template('home.html', title='Home Page')
-
-
-   
-
-
-    
 
 @app.route("/login", methods=['GET', 'POST'])
 def login():
@@ -48,36 +33,49 @@ def login():
                 return redirect(url_for('library'))
     else:
         print(form.errors)
-    return render_template('login.html', title='Login', form=form)
+    return render_template('login.html', title='Login', form=form, sform=SearchForm())
 
-@app.route("/logout")
+
+@app.route("/logout", methods=['GET', 'POST'])
 def logout():
     logout_user()
-    return redirect(url_for('login'))
+    return redirect(url_for('login'), sform = SearchForm())
 
-@app.route('/library')
+
+@app.route('/library', methods =['Get', 'POST'])
 def library():
-    return render_template('library.html', title ='Library')
+    books = Books.query.order_by(func.random()).limit(6)
+    books2 = Books.query.order_by(func.random()).limit(6)
+    return render_template('library.html', title ='Library', Books1=books, Books2=books2, sform=SearchForm())
 
-@app.route('/shelf')
+
+@app.route('/shelf', methods=['GET','POST'])
 @login_required
-def shelf():
-    return render_template('shelf.html', title='My Shelf')
+def shelf():    
+    return render_template('shelf.html', title='My Shelf', sform = SearchForm())
+
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
-
     form = RegistrationForm()
     if form.validate_on_submit():
         hash_pw = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
-
         user = Users(first_name=form.first_name.data,last_name= form.last_name.data,email=form.email.data, password=hash_pw)
-        
         db.session.add(user)
         db.session.commit()
-
         return redirect(url_for('home'))
     else:
         print(form.errors)
+    return render_template('register.html', title='Register', form = form, sform=SearchForm())
 
-    return render_template('register.html', title='Register', form = form)
+
+@app.route('/search_results', methods=['GET', 'POST'])
+def search_results():   
+    sform = SearchForm()
+    if sform.validate_on_submit():
+        search_data = "%s"%(sform.search.data)
+        books = Books.query.filter(Books.book_title.like("%"+search_data+"%")).all()
+        sform = SearchForm()
+        return render_template('book-search.html', title ='Your search results',sform = sform, books = books)
+    return render_template('book-search.html', title ='Your search results',sform = sform)
+

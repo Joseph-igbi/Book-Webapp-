@@ -1,7 +1,37 @@
 
 {% extends "layout.html" %}
 {% block body_content%}
+		
+<div class= 'form', style= "right">
 
-<h3> Explore Books </h3>
+</div>
+
+
+<span><h3> Explore Books </h3> <a href="{{url_for('library')}}">Click to view random books</a></span>
+
+<div class ="container">
+	<div style=>
+		{% for image in Books1 %}
+		<img src ={{image.book_image}} style ="float:left;width:15%">
+   		<br>
+		
+		{% endfor %}
+		<br>
+		<br>
+		{% for image in Books2 %}
+		<img src ={{image.book_image}} style ="float:left;width:15%">
+		<br>
+	
+		{% endfor %}
+
+	</div>
+</div>
+	
+
+
+
+
+
+
 
 {% endblock %}
