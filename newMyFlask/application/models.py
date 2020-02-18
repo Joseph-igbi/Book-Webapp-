@@ -29,8 +29,8 @@ class Bookshelf(db.Model, UserMixin):
     date_created = db.Column(db.DateTime, nullable=False, default =datetime.utcnow)
     book_name= db.Column(db.String(400), nullable= False)
     book_image= db.Column(db.String(400), nullable= False)
-    book_sid = db.Column(db.Integer, db.ForeignKey('books.book_id'))
-    
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    book_id= db.Column(db.Integer, nullable=False)
     #def __repr__(self):
       #  return ''.join(['bookselfID: ', self.bookshelf_id, '\r\n', 'shelf_name: ', self.bookshelf_name])    
     @login_manager.user_loader
@@ -45,7 +45,7 @@ class Users(db.Model, UserMixin):
     last_name = db.Column(db.String(300), nullable=False)
     email = db.Column(db.String(500), nullable=False, unique=True)
     password= db.Column(db.String(500), nullable=False)
-    bookshelves = db.Column(db.Integer, db.ForeignKey('bookshelf.bookshelf_id'))
+    user_shelf = db.relationship('Bookshelf', backref='librarian', lazy=True)
    
     def __repr__(self):
         return ''.join(['UserID: ', str(self.id), '\r\n', 'Email: ', self.email])

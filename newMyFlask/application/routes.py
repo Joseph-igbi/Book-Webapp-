@@ -55,7 +55,7 @@ def shelf():
 
     form = CreateForm()
     if form.validate_on_submit():
-        addBook= Bookshelf(bookshelf_name=form.shelf_name.data, book_name='NaN', book_image='NaN', book_sid=1)
+        addBook= Bookshelf(bookshelf_name=form.shelf_name.data, book_name='NaN', book_image='NaN', book_id=1,librarian=current_user)
         db.session.add(addBook)
         db.session.commit()
 
