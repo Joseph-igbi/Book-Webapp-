@@ -2,9 +2,9 @@
 from flask import render_template, redirect, url_for, request, flash
 from application import app, db, bcrypt
 from application.models import Users
-from application.forms import RegistrationForm, LoginForm, SearchForm
+from application.forms import RegistrationForm, LoginForm, SearchForm, CreateForm, AddShelfForm, DescShelfForm
 from flask_login import login_user, current_user, logout_user, login_required
-from application.models import Books
+from application.models import Books, Users, Bookshelf 
 import pandas as pd
 from sqlalchemy  import func, select 
 
@@ -51,8 +51,18 @@ def library():
 
 @app.route('/shelf', methods=['GET','POST'])
 @login_required
-def shelf():    
-    return render_template('shelf.html', title='My Shelf', sform = SearchForm())
+def shelf():
+
+    form = CreateForm()
+    if form.validate_on_submit():
+        addBook= Bookshelf(bookshelf_name=form.shelf_name.data, book_name='NaN', book_image='NaN', book_sid=1)
+        db.session.add(addBook)
+        db.session.commit()
+
+        return redirect(url_for('create_shelf'))
+
+       
+    return render_template('shelf.html', title='My Shelf', sform = SearchForm(), form=form)
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -79,3 +89,17 @@ def search_results():
         return render_template('book-search.html', title ='Your search results',sform = sform, books = books)
     return render_template('book-search.html', title ='Your search results',sform = sform)
 
+@app.route('/create_shelf', methods=['GET', 'POST'])
+@login_required
+def create_shelf():
+    form = DescShelfForm()
+    if form.validate_on_submit():
+        search_data = "%s"%(form.addbook_name.data)
+        books = Books.query.filter(Books.book_title.like("%"+search_data+"%")).all()
+       
+
+
+        return render_template('create_shelf.html', title='Create new Shelf', sform= SearchForm(),aform=AddShelfForm(),form=form,books=books)
+
+    return render_template('create_shelf.html', title='Create new Shelf', sform= SearchForm(), form=form)
+   

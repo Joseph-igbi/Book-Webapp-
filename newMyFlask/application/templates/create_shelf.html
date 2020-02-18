@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+{% block body_content%}
+
+<h3> Please provide shelf details below </h3>
+<div class= 'form'>
+<form method = "POST" action="">
+	{{form.hidden_tag()}}
+	{{form.addbook_name.label}}
+	<p style="display:inline-block;">{{form.addbook_name}}</p>
+	<p style="display:inline-block;">{{form.submit}}</p>
+	<br>
+	{{df}}
+{% if books %}
+	{% for book in books %}
+		<h4>{{book.book_title}}</h4>
+		<img src ={{book.book_image}} style ="upperleft;width:5%"> {{aform.add}}
+		<br><br>
+		{% endfor %}
+{% else %}
+
+<p> No books found for your search </p>
+{% endif %}
+</form>
+{% endblock %}
+
+

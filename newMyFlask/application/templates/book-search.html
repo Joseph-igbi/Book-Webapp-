@@ -2,13 +2,17 @@
 {% extends "layout.html" %}
 {% block body_content%}
 
+
+
 {% if books %}
 	{% for book in books %}
+		<img src ={{book.book_image}} style ="float:left;width:15%">
 		<h3>{{book.book_title}}</h3>
+		<p{width:250px; white-space: nowrap;overflow:hidded; text-overflow: ellipsis;}> {{book.book_desc}}</p>
 	{% endfor %}
 {% else %}
 
-	<p> No books found for your search </p>
+<p> No books found for your search </p>
 {% endif %}
 {% endblock %}
 

@@ -26,17 +26,30 @@ class RegistrationForm(FlaskForm):
 
 class LoginForm(FlaskForm):
     email = StringField('Email', validators =[DataRequired(),Email()])
-
     password = PasswordField('Password', validators = [DataRequired()])
-    
     remember = BooleanField('Remember Me')
     submit = SubmitField('Login')
 
 
 class SearchForm(FlaskForm):
-    
     search=StringField('search', validators =[DataRequired()])
-    submit = SubmitField('Search')
+    submit = SubmitField('search')
+
+
+class CreateForm(FlaskForm):
+    shelf_name= StringField('Shelf Name: ', validators =[DataRequired()])
+    create = SubmitField('Create New')
+
+class DescShelfForm(FlaskForm):
+    
+    addbook_name = StringField('Add book: ', validators = [DataRequired(), Length(min=2, max =100)])
+    submit = SubmitField('search')
+
+class AddShelfForm(FlaskForm):
+   add = SubmitField('add')
+   
+    
+
 
 
     
