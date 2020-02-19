@@ -2,7 +2,7 @@
 from flask import render_template, redirect, url_for, request, flash
 from application import app, db, bcrypt
 from application.models import Users
-from application.forms import RegistrationForm, LoginForm, SearchForm, CreateForm, AddShelfForm, DescShelfForm, SelectBookshelf, DeleteBookshelf
+from application.forms import RegistrationForm, LoginForm, SearchForm, CreateForm,DescShelfForm, SelectBookshelf, DeleteBookshelf
 from flask_login import login_user, current_user, logout_user, login_required
 from application.models import Books, Users, Library, Bookshelf 
 import pandas as pd
@@ -52,7 +52,7 @@ def library():
 @app.route('/shelf', methods=['GET','POST'])
 @login_required
 def shelf():
-
+   
     form = CreateForm()
     if form.validate_on_submit():
         create_sh= Library(library_name=form.shelf_name.data, librarian=current_user)
@@ -70,18 +70,26 @@ def shelf():
 
     dd_form= SelectBookshelf()
     dd_form.bookshelves.choices= [(shelf.library_id, shelf.library_id) for shelf in Library.query.filter_by(libuser_id=num_user)]
-
+   
     
     if d_form.validate_on_submit:
-        drop_down=dd_form.bookshelves.data
-        display_shelf = Bookshelf.query.filter_by(library_id=drop_down)
+        drop_down=d_form.bookshelves.data
+        display_shelf = Bookshelf.query.filter_by(library_id=drop_down) 
+
 
     if dd_form.validate_on_submit:
-        drop_down=dd_form.bookshelves.data
-        display_shelf = Bookshelf.query.filter_by(library_id=drop_down)
+        
+        shelfid=d_form.bookshelves.data
+        display_shelf = Bookshelf.query.filter_by(library_id=shelfid) 
 
 
-    return render_template('shelf.html', title='My Shelf', sform = SearchForm(), form=form, cs=created_shelves,dd_form=dd_form, d_form=d_form) 
+        print('shelf id at shelf dd_form is: ', shelfid) 
+        return render_template('shelf.html', title='My Shelf', sform = SearchForm(), form=form, cs=created_shelves,dd_form=dd_form, d_form=d_form, shelfid=shelfid) 
+
+
+    
+    print('shelf id at shelf bottom is:', shelfid)
+    return render_template('shelf.html', title='My Shelf', sform = SearchForm(), form=form, cs=created_shelves,dd_form=dd_form, d_form=d_form, shelfid=shelfid) 
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -110,18 +118,18 @@ def search_results():
 @app.route('/edit_shelf', methods=['GET', 'POST'])
 @login_required
 def edit_shelf():
-    dropdown=SelectBookshelf()
-    shelfid= dropdown.bookshelves.data
-    print(shelfid)
-    form = DescShelfForm()
-    aform = AddShelfForm()
-   
+    shelfid = SelectBookshelf()
+    shelfid= shelfid.bookshelves.data
+    print('shelf id at edit_shelf: ', shelfid)
+    form = DescShelfForm()  
     search_data = "%s"%(form.addbook_name.data)
     books = Books.query.filter(Books.book_title.like("%"+search_data+"%")).all()
     if form.validate_on_submit():
-        return render_template('create_shelf.html', title='Create new Shelf', sform= SearchForm(), form=form, books=books, aform=aform)
-
-    return render_template('create_shelf.html', title='Create new Shelf', sform= SearchForm(), form=form, aform=aform)
+        shelfid= shelfid
+        return render_template('create_shelf.html', title='Create new Shelf', sform= SearchForm(), form=form, books=books,action=action)
+    
+    return render_template('create_shelf.html', title='Create new Shelf', sform= SearchForm(), form=form, books=books, shelfid=shelfid)
+    
 
 @app.route('/shelf/delete', methods=['GET','POST'])
 @login_required
@@ -132,6 +140,21 @@ def shelf_delete():
      db.session.delete(delshelf)
      db.session.commit()
      return redirect(url_for('shelf'))
+
+
+@app.route('/<shelfid>/add/<book_id>', methods=['GET','POST'])
+@login_required
+def add(shelfid,book_id):
+    book_id =str(book_id)
+    print('shelf id at add: ', shelfid)
+    book = Books.query.filter_by(book_id= book_id).first()
+
+    addbook = Bookshelf(book_name=book.book_title, book_image= book.book_image, user_book=current_user, library_id= shelfid)
+    db.session.add(addbook)
+    db.session.commit()
+    
+    return redirect(url_for('edit_shelf'))
+
 
 
 

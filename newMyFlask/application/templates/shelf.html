@@ -10,28 +10,45 @@
 	{{form.create}}
 	</form>
 <br>
-
 <h3> Existing Shelves: </h3>
 
+<style>
+table,th,td{border: 1px solid black;}
+th {text-align:left;}
+</style>
+
+<table style='width:30%'>
+	<thead>
+	<tr>
+		<th> Shelf Name</th> 	
+		<th> Shelf ID </th>
+		<th> Date Created</th>	
+	</tr>
+	</thead>
+	<tbody>
 {% for shelf in cs %}
-<span> <p> {{shelf.library_name}} {{shelf.date_created}}</p> </span>
-{% endfor %} <p><b><i>To delete, please select Shelf_ID number</i></b></p>
+<tr>
+	<td>{{shelf.library_name}}</td>
+       	<td>{{shelf.library_id}}</td>
+	<td>{{shelf.date_created}}</td> 
+
+</tr>
+{% endfor %} 
+	</tbody>
+</table>
+<h3><i> To Edit, please select Shelf_ID number:<i> </h3>
+<div class='form'>
+	<form method ='POST' action="/edit_shelf">
+	{{dd_form.hidden_tag()}}
+	{{dd_form.bookshelves}}
+	{{dd_form.submit}}
+	<br>
+</form>
+<p><b><i>To delete, please select Shelf_ID number</i></b></p>
 <form method ='POST' action="/shelf/delete">
 	{{d_form.hidden_tag()}}
 	{{d_form.bookshelves}}
 	{{d_form.submit}}
-	<br>
-</form>
-
-
-
-
-<h3><i> To Edit, please select Shelf_ID number:<i> </h3>
-<div class='form'>
-<form method ='POST' action="/edit_shelf">
-	{{dd_form.hidden_tag()}}
-	{{dd_form.bookshelves}}
-	{{dd_form.submit}}
 	<br>
 </form>
 

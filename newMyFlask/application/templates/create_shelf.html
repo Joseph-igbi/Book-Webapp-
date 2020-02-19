@@ -10,27 +10,23 @@
 	<p style="display:inline-block;">{{form.addbook_name}}</p>
 	<p style="display:inline-block;">{{form.submit}}</p>
 	<br>
+</form>
 {% if books %}
 	{% for book in books %}
 </div>
-<div class='form'> 
+<div class='form'>
+	<h4>{{book.book_title}}</h4>
+	<img src ={{book.book_image}} style ="left;width:5%">
+	<br>
+	<form method='POST' action="/{{shelfid}}/add/{{book.book_id}}">
+		<button type ="submit">Add book</button>
+	</form>	
 
-<form method = "POST" action = "/addto_shelf">
-		{{aform.hidden_tag()}}
-		
-		<h4>{{book.book_title}}</h4>
-		<img src ={{book.book_image}} style ="left;width:5%">
-		<br>
-		{{aform.addb}}
 		<br><br>
-		{% endfor %}
-
-	</form>
 {% else %}
 </div>
 
-
-
+{% endfor %}
 
 
 

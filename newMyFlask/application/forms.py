@@ -55,8 +55,7 @@ class DeleteBookshelf(FlaskForm):
 
 
 
-class AddShelfForm(FlaskForm): 
-    addb = SubmitField('add book')
+
    
     
 
