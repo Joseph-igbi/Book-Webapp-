@@ -22,8 +22,6 @@ class RegistrationForm(FlaskForm):
 
 
 
-
-
 class LoginForm(FlaskForm):
     email = StringField('Email', validators =[DataRequired(),Email()])
     password = PasswordField('Password', validators = [DataRequired()])
@@ -45,8 +43,20 @@ class DescShelfForm(FlaskForm):
     addbook_name = StringField('Add book: ', validators = [DataRequired(), Length(min=2, max =100)])
     submit = SubmitField('search')
 
-class AddShelfForm(FlaskForm):
-   add = SubmitField('add')
+class SelectBookshelf(FlaskForm):
+    bookshelves = SelectField('bookshelves', choices=[]) 
+    submit = SubmitField('Submit')
+
+class DeleteBookshelf(FlaskForm):
+    bookshelves = SelectField('bookshelves', choices=[]) 
+    submit = SubmitField('Submit')
+
+
+
+
+
+class AddShelfForm(FlaskForm): 
+    addb = SubmitField('add book')
    
     
 

@@ -2,9 +2,9 @@
 from flask import render_template, redirect, url_for, request, flash
 from application import app, db, bcrypt
 from application.models import Users
-from application.forms import RegistrationForm, LoginForm, SearchForm, CreateForm, AddShelfForm, DescShelfForm
+from application.forms import RegistrationForm, LoginForm, SearchForm, CreateForm, AddShelfForm, DescShelfForm, SelectBookshelf, DeleteBookshelf
 from flask_login import login_user, current_user, logout_user, login_required
-from application.models import Books, Users, Bookshelf 
+from application.models import Books, Users, Library, Bookshelf 
 import pandas as pd
 from sqlalchemy  import func, select 
 
@@ -39,7 +39,7 @@ def login():
 @app.route("/logout", methods=['GET', 'POST'])
 def logout():
     logout_user()
-    return redirect(url_for('login'), sform = SearchForm())
+    return redirect(url_for('login'))
 
 
 @app.route('/library', methods =['Get', 'POST'])
@@ -55,15 +55,33 @@ def shelf():
 
     form = CreateForm()
     if form.validate_on_submit():
-        addBook= Bookshelf(bookshelf_name=form.shelf_name.data, book_name='NaN', book_image='NaN', book_id=1,librarian=current_user)
-        db.session.add(addBook)
+        create_sh= Library(library_name=form.shelf_name.data, librarian=current_user)
+        db.session.add(create_sh)
         db.session.commit()
 
-        return redirect(url_for('create_shelf'))
+        return redirect(url_for('shelf'))
+    
+    string_user = str(current_user)
+    num_user = string_user.strip('UserID: ')
+    created_shelves = Library.query.filter_by(libuser_id =num_user)
 
-       
-    return render_template('shelf.html', title='My Shelf', sform = SearchForm(), form=form)
+    d_form =DeleteBookshelf()
+    d_form.bookshelves.choices= [(shelf.library_id, shelf.library_id) for shelf in Library.query.filter_by(libuser_id=num_user)]
 
+    dd_form= SelectBookshelf()
+    dd_form.bookshelves.choices= [(shelf.library_id, shelf.library_id) for shelf in Library.query.filter_by(libuser_id=num_user)]
+
+    
+    if d_form.validate_on_submit:
+        drop_down=dd_form.bookshelves.data
+        display_shelf = Bookshelf.query.filter_by(library_id=drop_down)
+
+    if dd_form.validate_on_submit:
+        drop_down=dd_form.bookshelves.data
+        display_shelf = Bookshelf.query.filter_by(library_id=drop_down)
+
+
+    return render_template('shelf.html', title='My Shelf', sform = SearchForm(), form=form, cs=created_shelves,dd_form=dd_form, d_form=d_form) 
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -89,17 +107,36 @@ def search_results():
         return render_template('book-search.html', title ='Your search results',sform = sform, books = books)
     return render_template('book-search.html', title ='Your search results',sform = sform)
 
-@app.route('/create_shelf', methods=['GET', 'POST'])
+@app.route('/edit_shelf', methods=['GET', 'POST'])
 @login_required
-def create_shelf():
+def edit_shelf():
+    dropdown=SelectBookshelf()
+    shelfid= dropdown.bookshelves.data
+    print(shelfid)
     form = DescShelfForm()
+    aform = AddShelfForm()
+   
+    search_data = "%s"%(form.addbook_name.data)
+    books = Books.query.filter(Books.book_title.like("%"+search_data+"%")).all()
     if form.validate_on_submit():
-        search_data = "%s"%(form.addbook_name.data)
-        books = Books.query.filter(Books.book_title.like("%"+search_data+"%")).all()
-       
+        return render_template('create_shelf.html', title='Create new Shelf', sform= SearchForm(), form=form, books=books, aform=aform)
+
+    return render_template('create_shelf.html', title='Create new Shelf', sform= SearchForm(), form=form, aform=aform)
+
+@app.route('/shelf/delete', methods=['GET','POST'])
+@login_required
+def shelf_delete():
+     d=DeleteBookshelf()
+     ds=d.bookshelves.data
+     delshelf = Library.query.filter_by(library_id=ds).first()
+     db.session.delete(delshelf)
+     db.session.commit()
+     return redirect(url_for('shelf'))
 
 
-        return render_template('create_shelf.html', title='Create new Shelf', sform= SearchForm(),aform=AddShelfForm(),form=form,books=books)
 
-    return render_template('create_shelf.html', title='Create new Shelf', sform= SearchForm(), form=form)
+
+
+
+
    

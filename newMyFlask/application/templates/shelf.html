@@ -2,11 +2,40 @@
 {% extends "layout.html" %}
 {% block body_content%}
 
-<h5>Create new Shelf:</h5>
+<h3>Create new Shelf:</h3>
 	<form method = "POST" action="">
 	{{form.hidden_tag()}}
 	{{form.shelf_name.label}}
 	{{form.shelf_name}}	
 	{{form.create}}
 	</form>
+<br>
+
+<h3> Existing Shelves: </h3>
+
+{% for shelf in cs %}
+<span> <p> {{shelf.library_name}} {{shelf.date_created}}</p> </span>
+{% endfor %} <p><b><i>To delete, please select Shelf_ID number</i></b></p>
+<form method ='POST' action="/shelf/delete">
+	{{d_form.hidden_tag()}}
+	{{d_form.bookshelves}}
+	{{d_form.submit}}
+	<br>
+</form>
+
+
+
+
+<h3><i> To Edit, please select Shelf_ID number:<i> </h3>
+<div class='form'>
+<form method ='POST' action="/edit_shelf">
+	{{dd_form.hidden_tag()}}
+	{{dd_form.bookshelves}}
+	{{dd_form.submit}}
+	<br>
+</form>
+
+
+
+
 {% endblock %}
