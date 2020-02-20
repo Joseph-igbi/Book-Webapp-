@@ -1,4 +1,5 @@
 
+
 {% extends "layout.html" %}
 {% block body_content%}
 
@@ -38,7 +39,7 @@ th {text-align:left;}
 </table>
 <h3><i> To Edit, please select Shelf_ID number:<i> </h3>
 <div class='form'>
-	<form method ='POST' action="/edit_shelf">
+	<form method ='POST' action="/shelf/middleman">
 	{{dd_form.hidden_tag()}}
 	{{dd_form.bookshelves}}
 	{{dd_form.submit}}

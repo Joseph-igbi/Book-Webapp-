@@ -48,7 +48,7 @@ class SelectBookshelf(FlaskForm):
     submit = SubmitField('Submit')
 
 class DeleteBookshelf(FlaskForm):
-    bookshelves = SelectField('bookshelves', choices=[]) 
+    bookshelves = SelectField('bookshelves', choices=[],) 
     submit = SubmitField('Submit')
 
 

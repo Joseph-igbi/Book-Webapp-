@@ -1,7 +1,20 @@
 {% extends "layout.html" %}
 {% block body_content%}
+<h3>Books in {{shelfinfo.library_name}} Shelf  </h3>
 
-<h3> Please Choose shelf to edit: </h3>
+<body>
+<div class= "form">
+
+{% for books in bookshelf %}
+<img src={{books.book_image}} style="width:5%">
+<form method='POST' action="" style=withd:5%;>
+			<button type='submit'>remove</button>
+		</form>
+</div>
+{% endfor %}
+</div>	
+<br>
+
 
 <div class= 'form'>
 <form method = "POST" action="">
@@ -18,20 +31,13 @@
 	<h4>{{book.book_title}}</h4>
 	<img src ={{book.book_image}} style ="left;width:5%">
 	<br>
-	<form method='POST' action="/{{shelfid}}/add/{{book.book_id}}">
+	<form method='POST' action="/add/{{sid}}/shelf/{{book.book_id}}">
 		<button type ="submit">Add book</button>
 	</form>	
-
 		<br><br>
-{% else %}
 </div>
 
 {% endfor %}
-
-
-
-
-<p> No books found for your search </p>
 {% endif %}
 {% endblock %}
 

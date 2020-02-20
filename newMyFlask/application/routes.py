@@ -1,4 +1,3 @@
-
 from flask import render_template, redirect, url_for, request, flash
 from application import app, db, bcrypt
 from application.models import Users
@@ -7,7 +6,6 @@ from flask_login import login_user, current_user, logout_user, login_required
 from application.models import Books, Users, Library, Bookshelf 
 import pandas as pd
 from sqlalchemy  import func, select 
-
 
 
 @app.route('/')
@@ -41,7 +39,6 @@ def logout():
     logout_user()
     return redirect(url_for('login'))
 
-
 @app.route('/library', methods =['Get', 'POST'])
 def library():
     books = Books.query.order_by(func.random()).limit(6)
@@ -74,23 +71,10 @@ def shelf():
     
     if d_form.validate_on_submit:
         drop_down=d_form.bookshelves.data
-        display_shelf = Bookshelf.query.filter_by(library_id=drop_down) 
-
-
     if dd_form.validate_on_submit:
-        
-        shelfid=d_form.bookshelves.data
-        display_shelf = Bookshelf.query.filter_by(library_id=shelfid) 
+        return render_template('shelf.html', title='My Shelf', sform = SearchForm(), form=form, cs=created_shelves,dd_form=dd_form, d_form=d_form, shelfid=dd_form.bookshelves.data)     
 
-
-        print('shelf id at shelf dd_form is: ', shelfid) 
-        return render_template('shelf.html', title='My Shelf', sform = SearchForm(), form=form, cs=created_shelves,dd_form=dd_form, d_form=d_form, shelfid=shelfid) 
-
-
-    
-    print('shelf id at shelf bottom is:', shelfid)
     return render_template('shelf.html', title='My Shelf', sform = SearchForm(), form=form, cs=created_shelves,dd_form=dd_form, d_form=d_form, shelfid=shelfid) 
-
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     form = RegistrationForm()
@@ -115,20 +99,22 @@ def search_results():
         return render_template('book-search.html', title ='Your search results',sform = sform, books = books)
     return render_template('book-search.html', title ='Your search results',sform = sform)
 
-@app.route('/edit_shelf', methods=['GET', 'POST'])
+@app.route('/edit_shelf/<shelfid>', methods=['GET', 'POST'])
 @login_required
-def edit_shelf():
-    shelfid = SelectBookshelf()
-    shelfid= shelfid.bookshelves.data
-    print('shelf id at edit_shelf: ', shelfid)
-    form = DescShelfForm()  
+def edit_shelf(shelfid):
+    shelfid=str(shelfid)
+    form = DescShelfForm() 
+    bookshelf = Bookshelf.query.filter_by(library_id = shelfid).all()
+    shelfinfo = Library.query.filter_by(library_id=shelfid).first()
     search_data = "%s"%(form.addbook_name.data)
     books = Books.query.filter(Books.book_title.like("%"+search_data+"%")).all()
     if form.validate_on_submit():
-        shelfid= shelfid
-        return render_template('create_shelf.html', title='Create new Shelf', sform= SearchForm(), form=form, books=books,action=action)
+        return render_template('create_shelf.html', title='Create new Shelf', sform= SearchForm(), form=form, books=books, sid=shelfid, shelfinfo=shelfinfo, bookshelf=bookshelf)
+
+  
+
     
-    return render_template('create_shelf.html', title='Create new Shelf', sform= SearchForm(), form=form, books=books, shelfid=shelfid)
+    return render_template('create_shelf.html', title='Create new Shelf', sform= SearchForm(), form=form, books=books, sid=shelfid, bookshelf=bookshelf, shelfinfo=shelfinfo)
     
 
 @app.route('/shelf/delete', methods=['GET','POST'])
@@ -136,30 +122,36 @@ def edit_shelf():
 def shelf_delete():
      d=DeleteBookshelf()
      ds=d.bookshelves.data
+     delbooks = Bookshelf.query.filter_by(library_id=ds).all()
+     for books in delbooks: 
+         print('BOOOOOOOOOOOOOKS', books)
+         db.session.delete(books)
      delshelf = Library.query.filter_by(library_id=ds).first()
      db.session.delete(delshelf)
      db.session.commit()
      return redirect(url_for('shelf'))
 
-
-@app.route('/<shelfid>/add/<book_id>', methods=['GET','POST'])
+@app.route('/add/<sid>/shelf/<book_id>/', methods=['GET','POST'])
 @login_required
-def add(shelfid,book_id):
+def add(sid, book_id):
     book_id =str(book_id)
-    print('shelf id at add: ', shelfid)
+    print('shelf id at add: ', sid)
     book = Books.query.filter_by(book_id= book_id).first()
 
-    addbook = Bookshelf(book_name=book.book_title, book_image= book.book_image, user_book=current_user, library_id= shelfid)
+    addbook = Bookshelf(book_name=book.book_title, book_image= book.book_image, user_book=current_user, library_id= sid)
     db.session.add(addbook)
     db.session.commit()
     
-    return redirect(url_for('edit_shelf'))
+    return redirect(url_for('shelf'))
 
+@app.route('/shelf/middleman', methods=['GET','POST'])
+@login_required
+def middleman():
+    shelfid = SelectBookshelf()
+    shelfid = shelfid.bookshelves.data
+    shelfid=str(shelfid)
+    
+    return redirect('/edit_shelf/%s'%(shelfid))
 
+    
 
-
-
-
-
-
-   
