@@ -4,7 +4,6 @@ from application.models import Users
 from application.forms import RegistrationForm, LoginForm, SearchForm, CreateForm,DescShelfForm, SelectBookshelf, DeleteBookshelf
 from flask_login import login_user, current_user, logout_user, login_required
 from application.models import Books, Users, Library, Bookshelf 
-import pandas as pd
 from sqlalchemy  import func, select 
 
 
@@ -43,7 +42,10 @@ def logout():
 def library():
     books = Books.query.order_by(func.random()).limit(6)
     books2 = Books.query.order_by(func.random()).limit(6)
-    return render_template('library.html', title ='Library', Books1=books, Books2=books2, sform=SearchForm())
+    books3 = Books.query.order_by(func.random()).limit(6)
+    books4 = Books.query.order_by(func.random()).limit(6)
+
+    return render_template('library.html', title ='Library', Books1=books, Books2=books2,Books3=books3, Books4=books4,sform=SearchForm())
 
 
 @app.route('/shelf', methods=['GET','POST'])
@@ -106,10 +108,11 @@ def edit_shelf(shelfid):
     form = DescShelfForm() 
     bookshelf = Bookshelf.query.filter_by(library_id = shelfid).all()
     shelfinfo = Library.query.filter_by(library_id=shelfid).first()
+    shelf_name= shelfinfo.library_name
     search_data = "%s"%(form.addbook_name.data)
     books = Books.query.filter(Books.book_title.like("%"+search_data+"%")).all()
     if form.validate_on_submit():
-        return render_template('create_shelf.html', title='Create new Shelf', sform= SearchForm(), form=form, books=books, sid=shelfid, shelfinfo=shelfinfo, bookshelf=bookshelf)
+        return render_template('create_shelf.html', title=shelf_name, sform= SearchForm(), form=form, books=books, sid=shelfid, shelfinfo=shelfinfo, bookshelf=bookshelf)
 
   
 
@@ -123,13 +126,32 @@ def shelf_delete():
      d=DeleteBookshelf()
      ds=d.bookshelves.data
      delbooks = Bookshelf.query.filter_by(library_id=ds).all()
-     for books in delbooks: 
-         print('BOOOOOOOOOOOOOKS', books)
+     for books in delbooks:  
          db.session.delete(books)
      delshelf = Library.query.filter_by(library_id=ds).first()
      db.session.delete(delshelf)
      db.session.commit()
      return redirect(url_for('shelf'))
+
+@app.route('/shelf/middleman', methods=['GET','POST'])
+@login_required
+def middleman():
+    shelfid = SelectBookshelf()
+    shelfid = shelfid.bookshelves.data
+    shelfid=str(shelfid)
+    
+    return redirect('/edit_shelf/%s'%(shelfid))
+
+@app.route('/edit_shelf/<sid>/remove', methods=['GET','POST'])
+@login_required
+def remove(sid):
+    bookshelf = Bookshelf.query.filter_by(library_id =sid).all()
+    for books in bookshelf:
+        print('BOOOOOOOOOKS', books.bookshelf_id)
+    shelfinfo = Library.query.filter_by(library_id = sid).first()
+    shelf_name= shelfinfo.library_name
+
+    return render_template('remove_book.html', title=shelf_name, sform= SearchForm(), sid=sid, books=bookshelf, shelfinfo=shelfinfo)
 
 @app.route('/add/<sid>/shelf/<book_id>/', methods=['GET','POST'])
 @login_required
@@ -142,16 +164,18 @@ def add(sid, book_id):
     db.session.add(addbook)
     db.session.commit()
     
-    return redirect(url_for('shelf'))
+    return redirect('/edit_shelf/%s'%(sid))
 
-@app.route('/shelf/middleman', methods=['GET','POST'])
+
+@app.route('/delete/<sid>/shelf/<book_id>', methods=['GET','POST'])
 @login_required
-def middleman():
-    shelfid = SelectBookshelf()
-    shelfid = shelfid.bookshelves.data
-    shelfid=str(shelfid)
+def book_delete(sid, book_id):
+    book_id =str(book_id)
+    print('shelf id at add: ', sid)
+    book = Bookshelf.query.filter_by(bookshelf_id=book_id, library_id=sid).first()
+    db.session.delete(book)
+    db.session.commit()
     
-    return redirect('/edit_shelf/%s'%(shelfid))
+    return redirect('/edit_shelf/%s'%(sid))
 
-    
 

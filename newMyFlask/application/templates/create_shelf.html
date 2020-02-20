@@ -6,14 +6,21 @@
 <div class= "form">
 
 {% for books in bookshelf %}
-<img src={{books.book_image}} style="width:5%">
-<form method='POST' action="" style=withd:5%;>
-			<button type='submit'>remove</button>
-		</form>
+<img src={{books.book_image}} style="float:left;width:5%">
 </div>
 {% endfor %}
 </div>	
 <br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<form method='POST' action="/edit_shelf/{{sid}}/remove">
+		<button type ="submit">Remove book</button>
+	</form>	
 
 
 <div class= 'form'>
