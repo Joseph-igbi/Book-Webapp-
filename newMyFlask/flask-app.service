@@ -1,7 +1,7 @@
 [Unit]
 Description=Flask Application
 [Service]
-User=pythonadm
+User=jenkins
 WorkingDirectory=/opt/flask-app
 ExecStart=/bin/bash -c 'cd /opt/flask-app && source ./venv/bin/activate && python ./app.py'
 [Install]
