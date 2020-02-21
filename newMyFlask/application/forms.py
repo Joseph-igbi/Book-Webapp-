@@ -45,11 +45,11 @@ class DescShelfForm(FlaskForm):
 
 class SelectBookshelf(FlaskForm):
     bookshelves = SelectField('bookshelves', choices=[]) 
-    submit = SubmitField('Submit')
+    submit = SubmitField('View')
 
 class DeleteBookshelf(FlaskForm):
     bookshelves = SelectField('bookshelves', choices=[],) 
-    submit = SubmitField('Submit')
+    submit = SubmitField('Delete')
 
 
 

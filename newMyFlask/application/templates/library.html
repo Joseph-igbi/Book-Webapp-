@@ -7,44 +7,13 @@
 </div>
 
 
-<span><h3> Explore Books </h3> <a href="{{url_for('library')}}">Click to view set of random books for inspiration</a></span>
+<i><h3 class="text-center"> Explore Books </h3></i> 
+
+<a class="text-center"  href="{{url_for('library')}}" >Click to view new set of random books for inspiration</a>
 
 <div class ="container">
-	<div style=>
 		{% for image in Books1 %}
-		<img src ={{image.book_image}} style ="float:left;width:15%">
-   		<br>
-		{% endfor %}	
-   		<br>
-   		<br>
-   		<br>
-		{% for image in Books2 %}
-		<img src ={{image.book_image}} style ="float:right;width:15%">
-   		<br>
+		<img src ={{image.book_image}} class="img-thumbnail"style ="float:left;width:25%;height:40%">
 		{% endfor %}
-   		<br>
-   		<br>
-   		<br>
-		{% for image in Books3 %}
-		<img src ={{image.book_image}} style ="float:left;width:15%">
-   		<br>
-		{% endfor %}
-   		<br>
-   		<br>
-   		<br>
-		{% for image in Books4 %}
-		<img src ={{image.book_image}} style ="float:right;width:15%">
-   		<br>
-		{% endfor %}
-
-	</div>
-</div>
-	
-
-
-
-
-
-
-
+	</div>	
 {% endblock %}

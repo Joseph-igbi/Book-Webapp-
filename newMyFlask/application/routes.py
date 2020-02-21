@@ -1,11 +1,11 @@
 from flask import render_template, redirect, url_for, request, flash
-from application import app, db, bcrypt
+from application import app, db, bcrypt, bootstrap
 from application.models import Users
 from application.forms import RegistrationForm, LoginForm, SearchForm, CreateForm,DescShelfForm, SelectBookshelf, DeleteBookshelf
 from flask_login import login_user, current_user, logout_user, login_required
 from application.models import Books, Users, Library, Bookshelf 
 from sqlalchemy  import func, select 
-
+from flask_bootstrap import Bootstrap
 
 @app.route('/')
 @app.route('/home', methods=['GET', 'POST'])
@@ -40,12 +40,8 @@ def logout():
 
 @app.route('/library', methods =['Get', 'POST'])
 def library():
-    books = Books.query.order_by(func.random()).limit(6)
-    books2 = Books.query.order_by(func.random()).limit(6)
-    books3 = Books.query.order_by(func.random()).limit(6)
-    books4 = Books.query.order_by(func.random()).limit(6)
-
-    return render_template('library.html', title ='Library', Books1=books, Books2=books2,Books3=books3, Books4=books4,sform=SearchForm())
+    books = Books.query.order_by(func.random()).limit(30)
+    return render_template('library.html', title ='Library', Books1=books, sform=SearchForm())
 
 
 @app.route('/shelf', methods=['GET','POST'])
@@ -59,9 +55,7 @@ def shelf():
         db.session.commit()
 
         return redirect(url_for('shelf'))
-    
-    string_user = str(current_user)
-    num_user = string_user.strip('UserID: ')
+    num_user=current_user.id
     created_shelves = Library.query.filter_by(libuser_id =num_user)
 
     d_form =DeleteBookshelf()
@@ -117,7 +111,7 @@ def edit_shelf(shelfid):
   
 
     
-    return render_template('create_shelf.html', title='Create new Shelf', sform= SearchForm(), form=form, books=books, sid=shelfid, bookshelf=bookshelf, shelfinfo=shelfinfo)
+    return render_template('create_shelf.html', title= shelf_name, sform= SearchForm(), form=form, books=books, sid=shelfid, bookshelf=bookshelf, shelfinfo=shelfinfo)
     
 
 @app.route('/shelf/delete', methods=['GET','POST'])
@@ -146,8 +140,6 @@ def middleman():
 @login_required
 def remove(sid):
     bookshelf = Bookshelf.query.filter_by(library_id =sid).all()
-    for books in bookshelf:
-        print('BOOOOOOOOOKS', books.bookshelf_id)
     shelfinfo = Library.query.filter_by(library_id = sid).first()
     shelf_name= shelfinfo.library_name
 
@@ -177,5 +169,43 @@ def book_delete(sid, book_id):
     db.session.commit()
     
     return redirect('/edit_shelf/%s'%(sid))
+
+@app.route("/account", methods=["GET", "POST"])
+@login_required
+def account():
+    user =current_user
+    return render_template('account.html', title='Hi %s'%(user.first_name), sform= SearchForm(),user=user )
+    
+
+
+@app.route("/account/delete", methods=["GET", "POST"])
+@login_required
+def account_delete():
+    user = current_user.id
+    book = Bookshelf.query.filter_by(book_user=user)
+    for books in book:
+        db.session.delete(books)
+    shelf = Library.query.filter_by(libuser_id=user)
+    for shelves in shelf:
+        db.session.delete(shelves)
+    account = Users.query.filter_by(id=user).first()
+    logout_user()
+    db.session.delete(account)
+    db.session.commit()
+    return redirect(url_for('register'))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

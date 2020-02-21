@@ -1,18 +1,18 @@
 {% extends "layout.html" %}
 {% block body_content%}
 
-<h3> Welcome to the Home Page </h3>
+<h3> Select book to remove from your shelf </h3>
 
 {% for book in books %}
 </div>
 <div class='form'>
 	<h4>{{book.book_title}}</h4>
-	<img src ={{book.book_image}} style ="left;width:5%">
+	<img src ={{book.book_image}} class="rounded" style ="left;width:9%">
 	<br>
 	<form method='POST' action="/delete/{{sid}}/shelf/{{book.bookshelf_id}}">
-		<button type ="submit">Delete book</button>
+		<button type ="submit" class="btn btn-danger btn-sm">Delete from library</button>
 	</form>	
-		<br><br>
+		<br>
 </div>
 
 {% endfor %}

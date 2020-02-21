@@ -1,0 +1,51 @@
+{% extends "layout.html" %}
+{% block body_content%}
+<h3>Books in {{shelfinfo.library_name}} Shelf  </h3>
+
+<body>
+<div class= "form">
+
+{% for books in bookshelf %}
+<img src={{books.book_image}} alt="game of thrones" class="img-thumbnail" style="float:left;width:10%;height:30%">
+</div>
+{% endfor %}
+</div>	
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<form method='POST' action="/edit_shelf/{{sid}}/remove">
+		<button type ="submit">Remove book</button>
+	</form>	
+
+
+<div class= 'form'>
+<form method = "POST" action="">
+	{{form.hidden_tag()}}
+	{{form.addbook_name.label}}
+	<p style="display:inline-block;">{{form.addbook_name}}</p>
+	<p style="display:inline-block;">{{form.submit}}</p>
+	<br>
+</form>
+{% if books %}
+	{% for book in books %}
+</div>
+<div class='form'>
+	<h4>{{book.book_title}}</h4>
+	<img src ={{book.book_image}} style ="left;width:5%">
+	<br>
+	<form method='POST' action="/add/{{sid}}/shelf/{{book.book_id}}">
+		<button type ="submit">Add book</button>
+	</form>	
+		<br><br>
+</div>
+
+{% endfor %}
+{% endif %}
+{% endblock %}
+
+
