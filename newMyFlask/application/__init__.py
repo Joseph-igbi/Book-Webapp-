@@ -9,8 +9,8 @@ from flask_bootstrap import Bootstrap
 app = Flask(__name__)
 
 
-app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('PROJ_DB_URI')
-app.config['SECRET_KEY'] = os.getenv('MY_SECRET_KEY')
+app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+pymysql://root:admin@34.89.33.37/flask1"
+app.config['SECRET_KEY'] = "7218a9143c27c16610765205a1b21cb7"
 
 bootstrap = Bootstrap(app)
 
