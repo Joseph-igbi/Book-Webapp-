@@ -10,6 +10,9 @@
 * [Deliverables](#deliverables)
 * [Project Planning](#project-planning)
 * [Risk Assessment](#risk-assessment)
+* [Architecture](#architecture)
+* [Deployment](#deployment)
+* [Front End Design](#front-end-design)
 
 ## Scope & Objectives 
 The overall objective of this project is to create a CRUD application with utilisation of supporting tools, methodologies and technologies that encapsulate all core modules covered during training. 
@@ -24,7 +27,7 @@ This includes the following aims:
 * Code fully integrated into a Version Control System using the Feature-Branch model which will subsequently be built through a CI server and deployed to a cloud-based virtual machine
 
 ## Deliverables
-The CRUD web app being created to meet the project scope is a Book Library application. On the app, Users can navigate through a book database containing thousands of books to find one they would be interested in reading. They will also be able to create personal shelves to which their favourite books in the app can be added or removed. 
+The CRUD web app being created to meet the project scope is a Book Library application. On the app, Users can navigate through a book database containing over six thousand books to find one they would be interested in reading. They will also be able to create personal shelves to which their favourite books in the app can be added or removed. 
 
 In light of this, the minimum viable product for the app has been defined as the following- 
 Users must be able to:
@@ -50,8 +53,59 @@ The project idea is illustrated in the below Use case diagram:
 ## Project planning
 Trello, a project tracking tool, was used to both plan and track this project. The link to the trello board is in the resources above. 
 ![trello][trello]
-The project outline and parameters were outlined as part of panning in the trello board to ensure the project remains on course throughout. The Tasks and Completed columns on the trello board were used as my tracking tools. 
-## E
+The project outline and parameters were outlined as part of planning in the trello board to ensure the project remains on course throughout. The Tasks and Completed columns on the trello board were used as my tracking tools. 
+## Risk Assessment
+The Risk Assessment for this project utilises the Failure Modes and Effects Analysis (FMEA) Methodology often used in Reliability Engineering. An advantage of FMECA is that it allows quantitative analysis of the failure modes so corrective action can be used to address the most serious concerns.
+
+In FMEA, the Risk Priority Number (RPN) = Severity x Occurrence x Detectibility. The aim is to get the RPN number as low as possible. 
+The initial risk assessment was carried out during project planning and then updated throughout the project.
+![risk]
+The biggest risk was the potential of a CSRF attack however that was heavily mitigated by flasks in-built protection which detects when an instruction does not come from the user due to the lack of a secret key. 
+HTTP traffic also forms a significant risk however, as this is a personal project that wont be used by the public mitigating this risk is not imperative. 
+The remaining risks were classed as risks that can be lived with however, the assessment shows how they could be improved for future work and the effect it would have.
+## Architecture
+
+### Entity Relationship Diagram
+The initial plan for the database structure is modelled below in the ERD. 
+
+The database was intially modelled to have 3 tables in my ERD but whilst implementing this i concluded that to meet the project MVP aim of allowing users to create shelfs, an extra table would be required.   
+![ierd]
+
+The final ERD as modelled below allows for the creation of shelfs in the Shelf table and for the updating of shelfs in the Book-shelf table with ShelfID creating a relationship between the two. The Many to One relationship between Users and Shelf means that each user can have multiple shelfs whilst the One to Many relationship between Shelf and Book-shelf means that for each shelf created, multiple books can be added.
+![ferd] 
+
+
+## Deployment
+
+### CI Pipeline
+
+The build and deployment processes were automated using the CI server Jenkins. Usually testing would also have been automated however due to issues with the pytest module in python and GCP, the testing process which was mapped out in the trello project plan was not carried out. Below is the planned CI pipeline. Filled in green are the steps that have been carried out for this project. 
+![pipeline] 
+Jenkins was used as it offers a simple way to set up a continous integration and deployment environment for almost any combination of source code. Jenkins polls the VCS in this case github and the build is triggered by the github webhook when a change has been commited to a predetermined branch. In this project the webhook was configured to the master branch ensuring only project work that had been deemed as working was deployed.    
+Another advantage of using Jenkins for automated deployments is that Jenkins allows your app to be deployed as a background process. This frees up the instance for other work and ensures the application isnt accidentally shut down by closing the VM.
+
+## Front End Design
+Home page 
+![home]
+<br>
+Main Library 
+![library]
+<br>
+Create shelf page 
+![create]
+<br>
+Update page 
+![view]
+<br>
+Delete page
+![delete]
+
+
+
+
+
+
+
 
 
 
@@ -89,3 +143,12 @@ Joseph Igbinadolor
 
 [usecase]: https://i.imgur.com/ssZejFD.png
 [trello]: https://i.imgur.com/gDVtoEa.png
+[risk]: https://i.imgur.com/6wzviuE.png
+[ierd]: https://i.imgur.com/3afg7oo.png
+[ferd]: https://i.imgur.com/jVkdiBg.png
+[pipeline]: https://i.imgur.com/749psqM.png
+[home]: https://i.imgur.com/qriaf17.png
+[library]: https://i.imgur.com/ivahCWK.png
+[create]: https://i.imgur.com/7NUpymd.png
+[view]: https://i.imgur.com/wtKYt2o.png
+[delete]: https://i.imgur.com/Rn5OF5X.png
