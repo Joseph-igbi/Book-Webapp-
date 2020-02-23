@@ -2,7 +2,7 @@
 ### Resources:
 * Trello Board: https://trello.com/b/Ydgv39X2/sfia-project-book-library-webapp-joseph-i
 * Website:
-* Presentation:
+* Presentation:https://docs.google.com/presentation/d/1grBFd1br-snfG0CajYf07WhpcW-0h-Orhmn1Vx1cwPA/edit#slide=id.g1f87997393_0_821
 * Books data from kaggle: https://www.kaggle.com/meetnaren/goodreads-best-books
 
 ## Index
