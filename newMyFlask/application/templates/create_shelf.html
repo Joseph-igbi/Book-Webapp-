@@ -44,9 +44,23 @@
 		<button type ="submit"class="btn btn-success btn-sm">Add book to shelf</button>
 	</form>	
 		<br>
+
 </div>
 {% endfor %}
 {% endif %}
+	{% for book in booka%}
+</div>
+<div class='form'>
+	<h4>{{book.book_title}}</h4>
+	<img src ={{book.book_image}} class="rounded" style ="left;width:8%">
+	<br>
+	<form method='POST' action="/add/{{sid}}/shelf/{{book.book_id}}">
+		<button type ="submit"class="btn btn-success btn-sm">Add book to shelf</button>
+	</form>	
+		<br>
+
+</div>
+{% endfor %}
 {% endblock %}
 
 

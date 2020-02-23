@@ -94,8 +94,9 @@ def search_results():
     if sform.validate_on_submit():
         search_data = "%s"%(sform.search.data)
         books = Books.query.filter(Books.book_title.like("%"+search_data+"%")).all()
+        booka = Books.query.filter(Books.author.like("%"+search_data+"%")).all()
         sform = SearchForm()
-        return render_template('book-search.html', title ='Your search results',sform = sform, books = books)
+        return render_template('book-search.html', title ='Your search results',sform = sform, books = books, booka=booka)
     return render_template('book-search.html', title ='Your search results',sform = sform)
 
 @app.route('/edit_shelf/<shelfid>', methods=['GET', 'POST'])
@@ -108,8 +109,9 @@ def edit_shelf(shelfid):
     shelf_name= shelfinfo.library_name
     search_data = "%s"%(form.addbook_name.data)
     books = Books.query.filter(Books.book_title.like("%"+search_data+"%")).all()
+    booka = Books.query.filter(Books.author.like("%"+search_data+"%")).all()
     if form.validate_on_submit():
-        return render_template('create_shelf.html', title=shelf_name, sform= SearchForm(), form=form, books=books, sid=shelfid, shelfinfo=shelfinfo, bookshelf=bookshelf)
+        return render_template('create_shelf.html', title=shelf_name, sform= SearchForm(), form=form, books=books,booka=booka, sid=shelfid, shelfinfo=shelfinfo, bookshelf=bookshelf)
 
   
 
