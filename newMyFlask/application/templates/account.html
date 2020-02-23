@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+{% block body_content%}
+
+
+<h3>First Name:       {{user.first_name}}</h3>
+<h3>Last Name:        {{user.last_name}}</h3>
+<h3>User ID:          {{user.id}}</h3>
+<h3>User Email:       {{user.email}}</h3>
+<br><br>
+<form action="{{url_for('account_delete')}}">
+	<button type="submit">Delete your account</button>
+</form>
+
+
+{% endblock %}

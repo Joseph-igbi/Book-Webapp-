@@ -1,0 +1,57 @@
+
+{% extends "layout.html" %}
+{% block body_content%}
+
+
+
+{% if books or booka %}
+	{% for book in books %}
+		<img src ={{book.book_image}} class="img-thumbnail" style ="float:left;width:10%">
+		<h3>{{book.book_title}}</h3>
+		<p{width:250px; white-space: nowrap;overflow:hidded; text-overflow: ellipsis;}> {{book.book_desc}}</p>
+
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		{% endfor %}
+	{% for book in booka %}
+		<img src ={{book.book_image}} class="img-thumbnail" style ="float:left;width:10%">
+		<h3>{{book.book_title}}</h3>
+		<p{width:250px; white-space: nowrap;overflow:hidded; text-overflow: ellipsis;}> {{book.book_desc}}</p>
+
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		<br>
+		{% endfor %}
+
+		
+		{% else %}
+
+<p> No books found for your search </p>
+{% endif %}
+{% endblock %}
+
+
+
+
+

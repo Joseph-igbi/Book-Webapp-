@@ -1,0 +1,66 @@
+{% extends "layout.html" %}
+{% block body_content%}
+<h3>Books in {{shelfinfo.library_name}} Shelf  </h3>
+
+
+<br>
+<body>
+{% for books in bookshelf %}
+<img src={{books.book_image}} alt="game of thrones" class="rounded float left" style="width:10%;height:30%">
+{% endfor %}
+</body>
+<br>
+<br>
+
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+   
+	<form method='POST' action="/edit_shelf/{{sid}}/remove" style="float:left">
+	<button type="submit" class="btn btn-outline-danger">Remove Book</button>
+	</form>
+	<br><br><br><br>
+  
+    </form>
+	<form method = "POST" action=""  >
+	{{form.hidden_tag()}}
+	
+	{{form.addbook_name.label}}
+	{{form.addbook_name}}
+	<button class="btn btn-outline-success my-2 my-sm-0;float:left" >
+		{{form.submit}}
+        </form>
+  </div>
+</nav>
+
+{% if books %}
+	{% for book in books %}
+</div>
+<div class='form'>
+	<h4>{{book.book_title}}</h4>
+	<img src ={{book.book_image}} class="rounded" style ="left;width:8%">
+	<br>
+	<form method='POST' action="/add/{{sid}}/shelf/{{book.book_id}}">
+		<button type ="submit"class="btn btn-success btn-sm">Add book to shelf</button>
+	</form>	
+		<br>
+
+</div>
+{% endfor %}
+{% endif %}
+	{% for book in booka%}
+</div>
+<div class='form'>
+	<h4>{{book.book_title}}</h4>
+	<img src ={{book.book_image}} class="rounded" style ="left;width:8%">
+	<br>
+	<form method='POST' action="/add/{{sid}}/shelf/{{book.book_id}}">
+		<button type ="submit"class="btn btn-success btn-sm">Add book to shelf</button>
+	</form>	
+		<br>
+
+</div>
+{% endfor %}
+{% endblock %}
+
+

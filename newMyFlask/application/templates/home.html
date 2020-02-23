@@ -1,0 +1,18 @@
+
+
+{% extends "layout.html" %}
+
+{% block title %}  Welcome to the Home Page {% endblock %}
+
+
+{% block body_content%}
+									
+<i><h4 class="text-center"> Find your next read </h4></i>
+
+<a href="{{url_for('register')}}" align="right">Sign up today!</a>
+<br>
+<a href="{{url_for('login')}}" align="right" >Login here</a>
+<img src ="https://cdn.insteading.com/wp-content/uploads/2018/10/bookshelf-with-ivy.jpg" class="img-thumbnail"  alt="book-tree" width="100%">
+
+
+{% endblock %}

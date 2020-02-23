@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+{% block body_content%}
+
+
+
+
+<h3><i> To Edit, please select Shelf_ID number:<i> </h3>
+<div class='form'>
+	<form method ='POST' action="/add/{{book_id}}">
+	{{dd_form.hidden_tag()}}
+	{{dd_form.bookshelves}}
+	{{dd_form.submit}}
+	<br>
+</form>
+{% endblock %}
