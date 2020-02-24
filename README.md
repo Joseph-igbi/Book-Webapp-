@@ -18,6 +18,7 @@
 ## Scope & Objectives 
 The overall objective of this project is to create a CRUD application with utilisation of supporting tools, methodologies and technologies that encapsulate all core modules covered during training. 
 
+
 This includes the following aims:
 * A Trello Board with full expansion on user stories, use cases and tasks 
 * A relational Database with at least 2 tables in it and a modelled relationship 
