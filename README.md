@@ -102,7 +102,7 @@ Delete page
 ![delete]
 
 ## Future improvements 
-The main aims of this project were met with the exception of implementing a TDD approach. Therefore the main future improvement for this project would be implementing a TDD approach and automated testing. 
+The main aims of this project were met with the exception of implementing a TDD approach. Therefore, the main future improvement for this project would be implementing a TDD approach and automated testing. 
 Other improvements include:
 * Use HTTPS protocol 
 * Add functionality allowing user to view other users libraries
