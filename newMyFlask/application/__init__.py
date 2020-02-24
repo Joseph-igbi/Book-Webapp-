@@ -5,11 +5,12 @@ import os
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
 from flask_bootstrap import Bootstrap
+from os import getenv
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI']= os.getenv('DATABASE_URI')
 db = SQLAlchemy(app)
-from os import getenvapp.config['SECRET_KEY']= getenv('SECRET_KEY')
+app.config['SECRET_KEY']= getenv('SECRET_KEY')
 
 
 bootstrap = Bootstrap(app)
