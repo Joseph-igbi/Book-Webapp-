@@ -56,7 +56,7 @@ Trello, a project tracking tool, was used to both plan and track this project. T
 ![trello][trello]
 The project outline and parameters were outlined as part of planning in the trello board to ensure the project remains on course throughout. The Tasks and Completed columns on the trello board were used as my tracking tools. 
 ## Risk Assessment
-The Risk Assessment for this project utilises the Failure Modes and Effects Analysis (FMEA) Methodology often used in Reliability Engineering. An advantage of FMECA is that it allows quantitative analysis of the failure modes so corrective action can be used to address the most serious concerns.
+The Risk Assessment for this project utilises the Failure Modes and Effects Analysis (FMEA) Methodology often used in Reliability Engineering. An advantage of FMEA is that it allows quantitative analysis of the failure modes so corrective action can be used to address the most serious concerns.
 
 In FMEA, the Risk Priority Number (RPN) = Severity x Occurrence x Detectibility. The aim is to get the RPN number as low as possible. 
 The initial risk assessment was carried out during project planning and then updated throughout the project.
