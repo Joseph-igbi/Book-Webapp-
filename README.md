@@ -1,4 +1,5 @@
 # Book-Library WebApp
+
 ### Resources:
 * Trello Board: https://trello.com/b/Ydgv39X2/sfia-project-book-library-webapp-joseph-i
 * Website: http://35.189.67.154:5000/
@@ -78,8 +79,7 @@ The final ERD as modelled below allows for the creation of shelves in the Shelf 
 
 ## Deployment
 
-### CI Pipeline
-
+### CI Pipeline:Wq
 The build and deployment processes were automated using the CI server Jenkins. Usually testing would also have been automated however due to issues with the pytest module in python and GCP, the testing process which was mapped out in the trello project plan was not carried out. Below is the planned CI pipeline. Filled in green are the steps that have been carried out for this project. 
 ![pipeline] 
 Jenkins was used as it offers a simple way to set up a continous integration and deployment environment for almost any combination of source code. Jenkins polls the VCS in this case github and the build is triggered by the github webhook when a change has been commited to a predetermined branch. In this project the webhook was configured to the master branch ensuring only project work that had been deemed as working was deployed.    
