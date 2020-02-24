@@ -4,7 +4,6 @@
 * Website: http://35.189.67.154:5000/
 * Presentation:https://docs.google.com/presentation/d/1grBFd1br-snfG0CajYf07WhpcW-0h-Orhmn1Vx1cwPA/edit#slide=id.g1f87997393_0_821
 * Books data from kaggle: https://www.kaggle.com/meetnaren/goodreads-best-books
-
 ## Index
 * [Scope & Objectives](#scope-&-objectives)
 * [Deliverables](#deliverables)
