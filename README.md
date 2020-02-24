@@ -1,10 +1,9 @@
 # Book-Library WebApp
 ### Resources:
 * Trello Board: https://trello.com/b/Ydgv39X2/sfia-project-book-library-webapp-joseph-i
-* Website:
-* Presentation:
+* Website: http://35.189.67.154:5000/
+* Presentation:https://docs.google.com/presentation/d/1grBFd1br-snfG0CajYf07WhpcW-0h-Orhmn1Vx1cwPA/edit#slide=id.g1f87997393_0_821
 * Books data from kaggle: https://www.kaggle.com/meetnaren/goodreads-best-books
-
 ## Index
 * [Scope & Objectives](#scope-&-objectives)
 * [Deliverables](#deliverables)
@@ -13,9 +12,11 @@
 * [Architecture](#architecture)
 * [Deployment](#deployment)
 * [Front End Design](#front-end-design)
+* [Future improvements](#future-improvements)
 
 ## Scope & Objectives 
 The overall objective of this project is to create a CRUD application with utilisation of supporting tools, methodologies and technologies that encapsulate all core modules covered during training. 
+
 
 This includes the following aims:
 * A Trello Board with full expansion on user stories, use cases and tasks 
@@ -33,16 +34,16 @@ In light of this, the minimum viable product for the app has been defined as the
 Users must be able to:
 * Create a User account that stores:
   * *User First and Last Name*
-  * *User Email
-  * *User Password
+  * *User Email*
+  * *User Password*
 * Login/Logout 
 * View and update account details
-* Navigate through the book database and find details on books using the search bar
 * Create a personal shelf where books the user likes can be stored
 * Add/Delete books from the personal shelf
 * Alternatively log in as guest with the limitation of not being able to create a personal shelf
 
 Additional functionalities to the Minimum Viable Product should include:
+* Navigate through the book database and find details on books using the search bar
 * View other users personal shelves
 * Personal shelves could have a yearly lifetime
 
@@ -55,7 +56,7 @@ Trello, a project tracking tool, was used to both plan and track this project. T
 ![trello][trello]
 The project outline and parameters were outlined as part of planning in the trello board to ensure the project remains on course throughout. The Tasks and Completed columns on the trello board were used as my tracking tools. 
 ## Risk Assessment
-The Risk Assessment for this project utilises the Failure Modes and Effects Analysis (FMEA) Methodology often used in Reliability Engineering. An advantage of FMECA is that it allows quantitative analysis of the failure modes so corrective action can be used to address the most serious concerns.
+The Risk Assessment for this project utilises the Failure Modes and Effects Analysis (FMEA) Methodology often used in Reliability Engineering. An advantage of FMEA is that it allows quantitative analysis of the failure modes so corrective action can be used to address the most serious concerns.
 
 In FMEA, the Risk Priority Number (RPN) = Severity x Occurrence x Detectibility. The aim is to get the RPN number as low as possible. 
 The initial risk assessment was carried out during project planning and then updated throughout the project.
@@ -68,10 +69,10 @@ The remaining risks were classed as risks that can be lived with however, the as
 ### Entity Relationship Diagram
 The initial plan for the database structure is modelled below in the ERD. 
 
-The database was intially modelled to have 3 tables in my ERD but whilst implementing this i concluded that to meet the project MVP aim of allowing users to create shelfs, an extra table would be required.   
+The database was intially modelled to have 3 tables in my ERD but whilst implementing this i concluded that to meet the project MVP aim of allowing users to create shelves, an extra table would be required.   
 ![ierd]
 
-The final ERD as modelled below allows for the creation of shelfs in the Shelf table and for the updating of shelfs in the Book-shelf table with ShelfID creating a relationship between the two. The Many to One relationship between Users and Shelf means that each user can have multiple shelfs whilst the One to Many relationship between Shelf and Book-shelf means that for each shelf created, multiple books can be added.
+The final ERD as modelled below allows for the creation of shelves in the Shelf table and for the updating of shelves in the Book-shelf table with ShelfID creating a relationship between the two. The Many to One relationship between Users and Shelf means that each user can have multiple shelfs whilst the One to Many relationship between Shelf and Book-shelf means that for each shelf created, multiple books can be added.
 ![ferd] 
 
 
@@ -100,42 +101,11 @@ Update page
 Delete page
 ![delete]
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+## Future improvements 
+The main aims of this project were met with the exception of implementing a TDD approach. Therefore, the main future improvement for this project would be implementing a TDD approach and automated testing. 
+Other improvements include:
+* Use HTTPS protocol 
+* Add functionality allowing user to view other users libraries
 
 #### Author
 Joseph Igbinadolor
