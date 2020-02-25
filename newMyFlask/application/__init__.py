@@ -10,7 +10,7 @@ from os import getenv
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI']= os.getenv('DATABASE_URI')
 db = SQLAlchemy(app)
-app.config['SECRET_KEY']= getenv('MY_SECRET_KEY')
+app.config['SECRET_KEY']= os.getenv('SECRET_KEY')
 
 
 bootstrap = Bootstrap(app)
