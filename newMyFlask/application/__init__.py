@@ -8,7 +8,7 @@ from flask_bootstrap import Bootstrap
 from os import getenv
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI']= os.getenv('DATABASE_URI')
+app.config['SQLALCHEMY_DATABASE_URI']= str(os.getenv('DATABASE_URL'))
 db = SQLAlchemy(app)
 app.config['SECRET_KEY']= str(os.getenv('SECRET_KEY'))
 
