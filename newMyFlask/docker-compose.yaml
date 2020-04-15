@@ -1,0 +1,26 @@
+
+version: "3.7"
+services:
+   book_webapp:
+     image: josephigbi/book_webapp
+     build: .
+     container_name: book_webapp
+     ports:
+     - target: 5000
+       published: 5000
+     environment: 
+     - SECRET_KEY=${SECRET_KEY}
+     - DATABASE_URI=${DATABASE_URI2}
+
+   database:
+     image: mysql:5.7
+     ports:
+     - target: 3306
+       published: 3306       
+     environment: 
+     - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+     - MYSQL_DATABASE=${MYSQL_DATABASE}
+
+
+
+

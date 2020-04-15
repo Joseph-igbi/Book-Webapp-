@@ -1,0 +1,5 @@
+
+venv
+*.xlsx
+__pycache__
+provision
