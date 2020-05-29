@@ -1,0 +1,19 @@
+
+{% extends "layout.html" %}
+{% block body_content%}
+		
+<div class= 'form', style= "right">
+
+</div>
+
+
+<i><h3 class="text-center"> Explore Books </h3></i> 
+
+<a class="text-center"  href="{{url_for('library')}}" >Click to view new set of random books for inspiration</a>
+
+<div class ="container">
+		{% for image in Books1 %}
+		<img src ={{image.book_image}} class="img-thumbnail"style ="float:left;width:25%;height:40%">
+		{% endfor %}
+	</div>	
+{% endblock %}
