@@ -16,7 +16,7 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
    
-	<form method='POST' action="/edit_shelf/{{sid}}/remove" style="float:left">
+	<form method='POST' action="/edit_shelf/{{sid}}/remove/" style="float:left">
 	<button type="submit" class="btn btn-outline-danger">Remove Book</button>
 	</form>
 	<br><br><br><br>
@@ -40,7 +40,7 @@
 	<h4>{{book.book_title}}</h4>
 	<img src ={{book.book_image}} class="rounded" style ="left;width:8%">
 	<br>
-	<form method='POST' action="/add/{{sid}}/shelf/{{book.book_id}}">
+	<form method='POST' action="/add/{{sid}}/shelf/{{book.book_id}}/">
 		<button type ="submit"class="btn btn-success btn-sm">Add book to shelf</button>
 	</form>	
 		<br>
@@ -54,7 +54,7 @@
 	<h4>{{book.book_title}}</h4>
 	<img src ={{book.book_image}} class="rounded" style ="left;width:8%">
 	<br>
-	<form method='POST' action="/add/{{sid}}/shelf/{{book.book_id}}">
+	<form method='POST' action="/add/{{sid}}/shelf/{{book.book_id}}/">
 		<button type ="submit"class="btn btn-success btn-sm">Add book to shelf</button>
 	</form>	
 		<br>

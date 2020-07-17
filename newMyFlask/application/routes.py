@@ -9,7 +9,6 @@ from flask_bootstrap import Bootstrap
 
 
 
-#jenkins test
 @app.route('/')
 @app.route('/home', methods=['GET', 'POST'])
 def home():   
@@ -74,6 +73,7 @@ def shelf():
         return render_template('shelf.html', title='My Shelf', sform = SearchForm(), form=form, cs=created_shelves,dd_form=dd_form, d_form=d_form, shelfid=dd_form.bookshelves.data)     
 
     return render_template('shelf.html', title='My Shelf', sform = SearchForm(), form=form, cs=created_shelves,dd_form=dd_form, d_form=d_form, shelfid=shelfid) 
+
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     form = RegistrationForm()
@@ -99,7 +99,7 @@ def search_results():
         return render_template('book-search.html', title ='Your search results',sform = sform, books = books, booka=booka)
     return render_template('book-search.html', title ='Your search results',sform = sform)
 
-@app.route('/edit_shelf/<shelfid>', methods=['GET', 'POST'])
+@app.route('/edit_shelf/<shelfid>/', methods=['GET', 'POST'])
 @login_required
 def edit_shelf(shelfid):
     shelfid=str(shelfid)
@@ -119,7 +119,7 @@ def edit_shelf(shelfid):
     return render_template('create_shelf.html', title= shelf_name, sform= SearchForm(), form=form, books=books, sid=shelfid, bookshelf=bookshelf, shelfinfo=shelfinfo)
     
 
-@app.route('/shelf/delete', methods=['GET','POST'])
+@app.route('/shelf/delete/', methods=['GET','POST'])
 @login_required
 def shelf_delete():
      d=DeleteBookshelf()
@@ -132,14 +132,14 @@ def shelf_delete():
      db.session.commit()
      return redirect(url_for('shelf'))
 
-@app.route('/shelf/middleman', methods=['GET','POST'])
+@app.route('/shelf/middleman/', methods=['GET','POST'])
 @login_required
 def middleman():
     shelfid = SelectBookshelf()
     shelfid = shelfid.bookshelves.data
     shelfid=str(shelfid)
     
-    return redirect('/edit_shelf/%s'%(shelfid))
+    return redirect('/edit_shelf/%s/'%(shelfid))
 
 @app.route('/edit_shelf/<sid>/remove', methods=['GET','POST'])
 @login_required
@@ -161,7 +161,7 @@ def add(sid, book_id):
     db.session.add(addbook)
     db.session.commit()
     
-    return redirect('/edit_shelf/%s'%(sid))
+    return redirect('/edit_shelf/%s/'%(sid))
 
 
 @app.route('/delete/<sid>/shelf/<book_id>', methods=['GET','POST'])
@@ -173,7 +173,7 @@ def book_delete(sid, book_id):
     db.session.delete(book)
     db.session.commit()
     
-    return redirect('/edit_shelf/%s'%(sid))
+    return redirect('/edit_shelf/%s/'%(sid))
 
 @app.route("/account", methods=["GET", "POST"])
 @login_required

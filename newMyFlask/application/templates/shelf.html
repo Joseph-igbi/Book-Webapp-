@@ -42,7 +42,7 @@
 
 <h3><i> To View or Edit, please select Shelf_ID number:<i> </h3>
 	<br>
-	<form method ='POST' action="/shelf/middleman">
+	<form method ='POST' action="/shelf/middleman/">
 	{{dd_form.hidden_tag()}}
 	{{dd_form.bookshelves}}
 	<div
@@ -52,7 +52,7 @@
 	<br><br><br><br><br>
 </form>
 <p><b><i>To delete, please select Shelf_ID number</i></b></p>
-<form method ='POST' action="/shelf/delete">
+<form method ='POST' action="/shelf/delete/">
 	
 	{{d_form.hidden_tag()}}
 	{{d_form.bookshelves}}
