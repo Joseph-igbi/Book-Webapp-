@@ -1,13 +1,9 @@
-#!/bin/bash
+#!/bin/env bash
+
 # define array
-PARAMETERS=(
+PARAMETERS=DATABASE_URI2 MYSQL_DATABASE MYSQL_ROOT_PASSWORD SECRET_KEY
 
-"DATABASE_URI2"
-"MYSQL_DATABASE"
-"MYSQL_ROOT_PASSWORD"
-"SECRET_KEY"
 
-)
 # Constants
 aws_region=eu-west-2
 # get length of an array
