@@ -30,17 +30,6 @@ class BasicTests(unittest.TestCase):
  
 #### helper methods ####
  
- 
-    def register(self):
-        new_user= Users(first_name ='Joseph', last_name= 'Igbi', email='joseph.igbi@joseph.com', password='password')
-        db.session.add(user)
-        db.session.commit()
- 
-    def login(self, email, password):
-        return self.app.post('/login',
-                 data=dict(email=email, password=password),
-                 follow_redirects=True)
- 
     def logout(self):
         return self.app.get('/logout', follow_redirects=True
     ) 
@@ -64,10 +53,6 @@ class BasicTests(unittest.TestCase):
         response = self.app.get('library', follow_redirects=True)
         self.assertEqual(response.status_code, 200)
 
-    def test_register(self):
-        self.register()
-        self.app.get('/login', follow_redirects=True)
-        return self.assertEqual(response.status_cod, 200)
 
 
 
