@@ -31,7 +31,7 @@ class BasicTests(unittest.TestCase):
 #### helper methods ####
  
  
-    def register(self, email, password, confirm):
+    def register(self):
         new_user= Users(first_name ='Joseph', last_name= 'Igbi', email='joseph.igbi@joseph.com', password='password')
         db.session.add(user)
         db.session.commit()
