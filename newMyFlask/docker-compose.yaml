@@ -2,6 +2,7 @@
 version: "3.3"
 services:
    book_webapp:
+     image: bookapp
      build: .
      container_name: book_webapp
      ports:
