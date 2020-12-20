@@ -1,0 +1,56 @@
+pipeline {
+agent {
+   label 'master'
+}
+
+environment {
+  VERSION = "dev"
+  DATABASE_URI2=credentials('DATABASE_URI2')
+  MYSQL_DATABASE=credentials('MYSQL_DATABASE')
+  MYSQL_ROOT_PASSWORD= credentials('MYSQL_ROOT_PASSWORD')
+  SECRET_KEY= credentials('SECRET_KEY')
+  
+}
+
+stages{
+    
+stage('details') {
+  steps {
+         echo "Running ${env.BUILD_ID} on {env.JENKINS_URL}"
+         echo "${env.VERSION}"
+         sh "echo $USER"
+  }
+
+  when {
+    environment name: 'VERSION', value: 'dev'
+  }
+}
+stage('checkout') {
+  steps {
+      checkout([$class: 'GitSCM',
+      branches: [[name: '*/master']],
+      doGenerateSubmoduleConfigurations: false,
+      extensions: [],
+      submoduleCfg: [],
+      userRemoteConfigs: [[credentialsId: '8f5cfa58-af1a-4df4-878a-db8bfaab4133',
+      url: 'https://github.com/Joseph-igbi/Book-Webapp-.git']]])
+  }
+}
+
+
+
+stage('test') {
+  steps {
+      sh 'pip3 install -r newMyFlask/requirements.txt'
+      sh 'python3 newMyFlask/test_basic.py'
+
+  }
+}
+
+stage('build image') {
+  steps {
+    sh 'cd newMyFlask && docker-compose up -d --build'
+    sh 'cd newMyFlask && docker-compose down'
+  }
+}
+}}

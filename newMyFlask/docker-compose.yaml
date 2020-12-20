@@ -1,8 +1,8 @@
 
-version: "3.3"
+version: "3.7"
 services:
    book_webapp:
-     image: bookapp
+     image: josephigbi/book_webapp
      build: .
      container_name: book_webapp
      ports:
